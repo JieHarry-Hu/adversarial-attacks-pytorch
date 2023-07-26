@@ -524,6 +524,8 @@ class FAB(Attack):
                             res = (x_to_fool - adv_curr).abs().view(x_to_fool.shape[0], -1).max(1)[0]  # nopep8
                         elif self.norm == 'L2':
                             res = ((x_to_fool - adv_curr)**2).view(x_to_fool.shape[0], -1).sum(dim=-1).sqrt()  # nopep8
+                        elif self.norm == 'L1':
+                            res = (x_to_fool - adv_curr).abs().view(x_to_fool.shape[0], -1).sum(dim=-1)  # nopep8
                         acc_curr = torch.max(acc_curr, res > self.eps)
 
                         ind_curr = (acc_curr == 0).nonzero().squeeze()
